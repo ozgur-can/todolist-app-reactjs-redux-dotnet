@@ -104,6 +104,9 @@ body {
   margin-left: auto;
   padding: 40px 0;
   text-align: right;
+  font-size: 36px;
+  color: #fff;
+  font-weight: 300;
 }
 
 .header-quote {
@@ -339,9 +342,18 @@ body {
 /*--------------------------------------------------------------
 ## Modal
 --------------------------------------------------------------*/
+
+.newmodal {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  justify-content: center;
+  color: "red";
+}
+
 .modal-wrap {
   display: flex;
-  visibility: hidden;
+  visibility: visible;
   position: fixed;
   z-index: 1;
   top: 0;

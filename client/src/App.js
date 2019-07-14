@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import * as GetQuotes from "./Particles/GetQuotes";
-// import "./vegaapp.css";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import styles from "./css/vegaapp.css";
+import NewTodoModal from "./NewTodoModal";
+// <NewTodoModal />
+import Modal from "react-responsive-modal";
 
 const App = () => {
+  const [showData, updateShow] = useState(false);
+  const [inputData, updateInput] = useState("");
+
   return (
     <div>
+      <Modal center="true" open={showData} onClose={() => updateShow(false)}>
+        <h2> Create a task today: </h2>
+        <form action="">
+          <div className="field-wrap">
+            <input
+              className="field"
+              type="text"
+              placeholder="Title.."
+              value={inputData}
+              onChange={e => updateInput(e.target.value)}
+            />
+          </div>
+          <div className="btn-wrap align-right">
+            <input
+              className="btn"
+              type="submit"
+              value="Create"
+              disabled={!inputData} // TODO: inputData "" ise disabled olacak
+              onClick={e => {
+                e.preventDefault();
+                updateShow(false);
+                updateInput("");
+              }}
+            />
+          </div>
+        </form>
+      </Modal>
       <div className="page-wrap">
         <header className="header">
           <div className="wrap">
@@ -13,6 +48,7 @@ const App = () => {
                 className="icon icon-plus js-modal-init"
                 src={require("./icons/icon-plus.svg")}
                 alt="Add New Item"
+                onClick={() => updateShow(true)}
               />
             </span>
             <div className="header-blockquote">
@@ -39,7 +75,6 @@ const App = () => {
             </div>
           </div>
         </header>
-
         <main className="main">
           <div className="wrap">
             <div className="item-row">
@@ -100,27 +135,6 @@ const App = () => {
             </div>
           </div>
         </main>
-
-        <div className="modal-wrap js-modal">
-          <div className="modal js-modal-inner">
-            <h2>Create a task today:</h2>
-            <form action="">
-              <div className="field-wrap">
-                <input
-                  className="field"
-                  type="text"
-                  placeholder="Title.."
-                  // value=""
-                  // TODO: value varsa onchange istiyor
-                />
-              </div>
-              <div className="btn-wrap align-right">
-                <input className="btn" type="submit" value="Create" />
-              </div>
-            </form>
-          </div>
-        </div>
-
         <footer className="footer">
           <div className="wrap">
             <span className="copy">&copy; 2018 Vega IT Sourcing</span>
