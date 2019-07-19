@@ -8,19 +8,20 @@ namespace todoApi.Controllers
 {
     public class ValuesController : ApiController
     {
-       SqlConnection con;
+        SqlConnection con;
         string startupPath = Environment.CurrentDirectory;
 
+        //AttachDbFilename=C:\Users\Ozgur Can\Desktop\mygithub\.net-reactJS-redux-todolist-app\server\todoApi\todoApi\Models\TaskDb.mdf;
         string connectionString = @"data source=(localdb)\MSSQLLocalDB;
-                                    AttachDbFilename=C:\Users\Ozgur Can\Desktop\mygithub\.net-reactJS-redux-todolist-app\server\todoApi\todoApi\Models\TaskDb.mdf;
                                     initial catalog=TaskDb;integrated security=True;
                                     MultipleActiveResultSets=True;App=EntityFramework";
-        
+        string queryString;
+
         // GET api/values
         [Route("api/values")]
         public IEnumerable<Task> Get()
         {
-            string queryString = "select * from dbo.Task";
+            queryString = "select * from dbo.Task";
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, con);
@@ -60,13 +61,14 @@ namespace todoApi.Controllers
         [Route("api/values/{id}")]
         public Task Get(int id)
         {
-            string queryString = "select * from dbo.Task where taskid={id}";
+            queryString = "select * from dbo.Task where taskid={id}";
             return new Task("asda", "22-03-1992");
         }
 
         [Route("api/values/newtask")]
         public Task Post([FromBody] Task task)
         {
+            queryString = "insert into";
             return new Task(task.Taskname, task.Taskdate);
         }
 
