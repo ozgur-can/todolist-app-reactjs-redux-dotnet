@@ -1,11 +1,17 @@
+let taskId = 0;
+
 export const getTasks = () => ({
   type: "GET_TASKS"
 });
 
-export const createTask = () => ({
-  type: "CREATE_TASK"
+export const createTask = text => ({
+  type: "CREATE_TASK",
+  id: taskId++,
+  text: text
 });
 
-export const finishTask = () => ({
-  type: "FINISH_TASK"
+export const finishTask = text => ({
+  type: "FINISH_TASK",
+  id: taskId++,
+  text: text
 });
