@@ -7,5 +7,5 @@ export const createTask = () => ({
 });
 
 export const finishTask = () => ({
-  type: "FINISH_TASk"
+  type: "FINISH_TASK"
 });

@@ -3,7 +3,7 @@ const reducer = (state = { tasks: [] }, action) => {
     case "GET_TASKS":
       return { ...state, loading: true };
     case "CREATE_TASK":
-      return { ...state };
+      return { ...state, clicked: true };
     case "FINISH_TASK":
       return { ...state };
   }
