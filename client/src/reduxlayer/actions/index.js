@@ -18,6 +18,6 @@ export const finishTask = (text, id) => ({
 });
 
 export const togglePopup = value => ({
-  type: "TOGGLE_POPUP",
-  toggleData: value
+  type: "TOGGLE_TASK_MODAL",
+  toggleTaskModal: value
 });

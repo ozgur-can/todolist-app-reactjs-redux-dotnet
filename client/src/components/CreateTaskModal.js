@@ -10,7 +10,7 @@ const CreateTaskModal = props => {
     <div>
       <Modal
         center={true}
-        open={props.toggleData}
+        open={props.toggleTaskModal}
         onClose={() => props.togglePopup(false)}
       >
         <h2> Create a task today: </h2>
@@ -45,7 +45,7 @@ const CreateTaskModal = props => {
   );
 };
 const mapStateToProps = state => ({
-  toggleData: state.toggleData
+  toggleTaskModal: state.toggleTaskModal
 });
 const mapDispatchToProps = dispatch => ({
   createTask: (task, date) => dispatch(createTask(task, date)),
