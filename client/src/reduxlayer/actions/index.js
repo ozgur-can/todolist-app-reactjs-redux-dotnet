@@ -1,4 +1,4 @@
-let taskId = 0;
+import shortid from "shortid";
 
 export const getTasks = () => ({
   type: "GET_TASKS"
@@ -6,12 +6,12 @@ export const getTasks = () => ({
 
 export const createTask = text => ({
   type: "CREATE_TASK",
-  id: taskId++,
+  id: shortid.generate(),
   text: text
 });
 
 export const finishTask = text => ({
   type: "FINISH_TASK",
-  id: taskId++,
+  id: shortid.generate(), // id bilgisi api'den gelmeli
   text: text
 });

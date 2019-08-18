@@ -1,5 +1,4 @@
-import { put, takeLatest, all } from "redux-saga/effects";
-
+import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
 function* fetchTasks() {
   try {
     const json = yield fetch(
@@ -11,10 +10,43 @@ function* fetchTasks() {
   }
 }
 
-function* actionWatcher() {
+function* addTask(action) {
+  // add post request
+  try {
+    yield delay(1000);
+    yield put({ type: "TASK_ADDED" });
+  } catch (e) {
+    console.log("adding task failed");
+  }
+}
+
+function* finishTask(action) {
+  //add delete request
+  //then, get request or fetchTasks again
+  try {
+    yield put({
+      type: "TASK_FINISHED",
+      id: action.id,
+      text: action.text,
+      completed: true
+    });
+  } catch (e) {
+    console.log("deleting task failed");
+  }
+}
+
+function* watchAddTask() {
+  yield takeLatest("CREATE_TASK", addTask);
+}
+
+function* watchDeleteTask() {
+  yield takeLatest("FINISH_TASK", finishTask);
+}
+
+function* watchFetchTasks() {
   yield takeLatest("GET_TASKS", fetchTasks);
 }
 
 export default function* rootSaga() {
-  yield all([actionWatcher()]);
+  yield all([fork(watchFetchTasks), fork(watchDeleteTask), fork(watchAddTask)]);
 }

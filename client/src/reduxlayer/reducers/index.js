@@ -1,11 +1,13 @@
-const reducer = (state = [], action) => {
+const reducer = (state = {}, action) => {
   switch (action.type) {
     case "CREATE_TASK":
-      return [...state, { id: action.id, text: action.text, completed: false }];
+      return { ...state, id: action.id, text: action.text, completed: false };
     case "GET_TASKS":
-      return [...state, { loading: true }];
+      return { ...state, loading: true };
+    case "TASK_ADDED":
+      return { ...state, id: action.id, text: action.text, completed: true };
     case "FINISH_TASK":
-      return [...state, { id: action.id, text: action.text, completed: true }];
+      return { ...state, id: action.id, text: action.text, completed: true };
     case "TASKS_RECEIVED":
       return { ...state, news: action.json, loading: false };
     case "TASKS_FETCH_FAILED":
