@@ -8,7 +8,6 @@ const CreateTaskModal = props => {
 
   return (
     <div>
-      {console.log(props)}
       <Modal
         center={true}
         open={props.toggleData}
@@ -34,8 +33,8 @@ const CreateTaskModal = props => {
               onClick={e => {
                 e.preventDefault();
                 props.togglePopup(false);
+                props.createTask(inputData, "13-5-2018");
                 updateInput("");
-                props.createTask(inputData);
                 //added create task dispatcher
               }}
             />
@@ -49,7 +48,7 @@ const mapStateToProps = state => ({
   toggleData: state.toggleData
 });
 const mapDispatchToProps = dispatch => ({
-  createTask: task => dispatch(createTask(task)),
+  createTask: (task, date) => dispatch(createTask(task, date)),
   togglePopup: value => dispatch(togglePopup(value))
 });
 

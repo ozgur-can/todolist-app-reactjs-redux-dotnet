@@ -5,7 +5,7 @@ var obj = {
   owner: ""
 };
 
-const possibility = Math.floor(Math.random() * 7);
+const possibility = Math.floor(Math.random() * data.length);
 
 obj.quote = data[possibility].quote;
 obj.owner = data[possibility].owner;

@@ -28,6 +28,7 @@ function* addTask(action) {
       type: "TASK_ADDED",
       id: action.id,
       text: action.text,
+      date: action.date,
       completed: false
     });
     // after task added, call fetchTask again
