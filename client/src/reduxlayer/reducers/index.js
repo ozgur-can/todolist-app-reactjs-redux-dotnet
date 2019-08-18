@@ -4,10 +4,10 @@ const reducer = (state = {}, action) => {
       return { ...state, id: action.id, text: action.text, completed: false };
     case "GET_TASKS":
       return { ...state, loading: true };
-    case "TASK_ADDED":
-      return { ...state, id: action.id, text: action.text, completed: true };
     case "FINISH_TASK":
       return { ...state, id: action.id, text: action.text, completed: true };
+    case "TOGGLE_POPUP":
+      return { ...state, toggleData: action.toggleData };
     case "TASKS_RECEIVED":
       return { ...state, news: action.json, loading: false };
     case "TASKS_FETCH_FAILED":

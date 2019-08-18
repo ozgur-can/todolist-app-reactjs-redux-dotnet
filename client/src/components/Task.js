@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { finishTask } from "../reduxlayer/actions";
 import toArray from "lodash.toarray";
-import shortid from "shortid";
 
 const Task = props => {
   var obj = props.article;
@@ -20,7 +19,7 @@ const Task = props => {
                     <input
                       className="checkbox-native"
                       type="checkbox"
-                      onClick={() => props.finishTask("taskName")}
+                      onClick={() => props.finishTask(data.title, "59")}
                     />
                     <span className="checkmark">
                       <svg viewBox="0 0 24 24">
@@ -48,7 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  finishTask: task => dispatch(finishTask(task))
+  finishTask: (task, id) => dispatch(finishTask(task, id))
 });
 
 export default connect(

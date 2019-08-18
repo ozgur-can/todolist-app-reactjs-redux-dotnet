@@ -10,8 +10,13 @@ export const createTask = text => ({
   text: text
 });
 
-export const finishTask = text => ({
+export const finishTask = (text, id) => ({
   type: "FINISH_TASK",
-  id: shortid.generate(), // id bilgisi api'den gelmeli
+  id: id, // id bilgisi api'den gelmeli
   text: text
+});
+
+export const togglePopup = value => ({
+  type: "TOGGLE_POPUP",
+  toggleData: value
 });

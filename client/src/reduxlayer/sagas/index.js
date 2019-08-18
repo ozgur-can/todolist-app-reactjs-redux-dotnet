@@ -1,4 +1,4 @@
-import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
+import { put, takeLatest, all, call, delay, fork } from "redux-saga/effects";
 function* fetchTasks() {
   try {
     const json = yield fetch(
@@ -13,8 +13,25 @@ function* fetchTasks() {
 function* addTask(action) {
   // add post request
   try {
+    //example fetch post req
+    // const json2 = yield fetch("https://productlistapi.herokuapp.com/", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({ sku: "123412", name: "ozgur", price: 12 })
+    // }).then(res => res.json());
+
+    //wait 1 sec after clicked "create task button"
     yield delay(1000);
-    yield put({ type: "TASK_ADDED" });
+    yield put({
+      type: "TASK_ADDED",
+      id: action.id,
+      text: action.text,
+      completed: false
+    });
+    // after task added, call fetchTask again
+    yield call(fetchTasks);
   } catch (e) {
     console.log("adding task failed");
   }
@@ -22,7 +39,6 @@ function* addTask(action) {
 
 function* finishTask(action) {
   //add delete request
-  //then, get request or fetchTasks again
   try {
     yield put({
       type: "TASK_FINISHED",
@@ -30,6 +46,8 @@ function* finishTask(action) {
       text: action.text,
       completed: true
     });
+    // after task deleted, call fetchTask again
+    yield call(fetchTasks);
   } catch (e) {
     console.log("deleting task failed");
   }

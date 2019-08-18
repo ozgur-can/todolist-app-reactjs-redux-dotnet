@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from "react";
-import * as GetQuotes from "./Particles/GetQuotes";
+import React, { useEffect } from "react";
+import * as GetQuotes from "./particles/GetQuotes";
 import "./css/vegaapp.css";
 import CreateTaskModal from "./components/CreateTaskModal";
 import Task from "./components/Task";
+import AddTaskButton from "./components/AddTaskButton";
 import { connect } from "react-redux";
 import { getTasks } from "./reduxlayer/actions";
 
 const App = props => {
-  const [taskPopup, showTaskPopup] = useState(false);
-  // const [inputData, updateInput] = useState("");
   useEffect(() => {
     props.getTasks();
   }, [props]);
-
   return (
     <div>
+      {console.log("props")}
       <div className="page-wrap">
-        {taskPopup && <CreateTaskModal />}
+        <CreateTaskModal />
         <header className="header">
           <div className="wrap">
-            <span className="btn-icon">
-              <img
-                className="icon icon-plus js-modal-init"
-                src={require("./icons/icon-plus.svg")}
-                alt="Add New Item"
-                onClick={() => {
-                  if (taskPopup === false) showTaskPopup(true);
-                  else showTaskPopup(false);
-                }}
-              />
-            </span>
+            <AddTaskButton />
             <div className="header-blockquote">
               <h1 className="header-quote">{GetQuotes.obj.quote}</h1>
               <div className="header-cite" />— {GetQuotes.obj.owner}
@@ -64,11 +53,15 @@ const App = props => {
   );
 };
 
+const mapStateToProps = state => ({
+  toggleData: state.toggleData
+});
+
 const mapDispatchToProps = dispatch => ({
   getTasks: () => dispatch(getTasks())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);

@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { createTask } from "../reduxlayer/actions";
+import { createTask, togglePopup } from "../reduxlayer/actions";
 import Modal from "react-responsive-modal";
 
 const CreateTaskModal = props => {
-  const [showData, updateShow] = useState(true);
   const [inputData, updateInput] = useState("");
 
   return (
     <div>
-      <Modal center={true} open={showData} onClose={() => updateShow(false)}>
+      {console.log(props)}
+      <Modal
+        center={true}
+        open={props.toggleData}
+        onClose={() => props.togglePopup(false)}
+      >
         <h2> Create a task today: </h2>
         <form>
           <div className="field-wrap">
@@ -29,7 +33,7 @@ const CreateTaskModal = props => {
               disabled={!inputData} // TODO: inputData "" ise disabled olacak
               onClick={e => {
                 e.preventDefault();
-                updateShow(false);
+                props.togglePopup(false);
                 updateInput("");
                 props.createTask(inputData);
                 //added create task dispatcher
@@ -41,12 +45,15 @@ const CreateTaskModal = props => {
     </div>
   );
 };
-
+const mapStateToProps = state => ({
+  toggleData: state.toggleData
+});
 const mapDispatchToProps = dispatch => ({
-  createTask: task => dispatch(createTask(task))
+  createTask: task => dispatch(createTask(task)),
+  togglePopup: value => dispatch(togglePopup(value))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreateTaskModal);
