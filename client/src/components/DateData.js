@@ -2,7 +2,7 @@ import React from "react";
 
 const dateChecker = date => {
   var regexCode = new RegExp(
-    "^((0?[1-9]|[12][0-9]|3[01])[- /.](0?[1-9]|1[012])[- /.](19|20)?[0-9]{2})*$"
+    "^((0?[1-9]|[12][0-9]|3[01])[-](0?[1-9]|1[012])[-](19|20)?[0-9]{2})*$"
   );
   return regexCode.test(date);
 };

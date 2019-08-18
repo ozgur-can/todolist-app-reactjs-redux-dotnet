@@ -33,7 +33,7 @@ const CreateTaskModal = props => {
               onClick={e => {
                 e.preventDefault();
                 props.togglePopup(false);
-                props.createTask(inputData, "13-5-2018");
+                props.createTask(inputData, props.date);
                 updateInput("");
                 //added create task dispatcher
               }}

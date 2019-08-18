@@ -17,15 +17,11 @@ const AddTaskButton = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  toggleData: state.toggleData
-});
-
 const mapDispatchToProps = dispatch => ({
   togglePopup: value => dispatch(togglePopup(value))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AddTaskButton);
