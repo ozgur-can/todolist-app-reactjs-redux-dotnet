@@ -21,49 +21,16 @@ namespace ExampleWebApi.Controllers
                                     AttachDbFilename=|DataDirectory|\taskdb.mdf;
                                     Integrated Security=True;User Instance=True;";
 
-        // GET: tasks
+        // GET: tasks/details/date
         [System.Web.Mvc.HttpGet]
-        [System.Web.Http.Route("tasks")]
-        public JsonResult Index()
+        [System.Web.Mvc.Route("tasks/details/{date}")]
+        public JsonResult Details(string date)
         {
-            string queryString = "select * from dbo.Task";
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(queryString, con);
-                List<Task> mytasks = new List<Task>();
-
-                try
-                {
-                    con.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        mytasks.Add(new Task(reader[0].ToString(), reader[1].ToString(), Convert.ToBoolean(reader[2]), reader[3].ToString()));
-                    }
-                    reader.Close();
-                    return Json(mytasks, JsonRequestBehavior.AllowGet);
-
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                return Json(mytasks, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        // GET: tasks/details/id
-        [System.Web.Http.Route("tasks/details/{id}")]
-        public HttpResponseMessage Details(string id, string date)
-        {
-            string queryString = "select * from dbo.Task where id = @id";
+            string queryString = "select * from dbo.Task where date = @date";
 
             SqlParameter param = new SqlParameter();
-            param.ParameterName = "@id";
-            param.Value = id;
-
+            param.ParameterName = "@date";
+            param.Value = date;
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -83,14 +50,13 @@ namespace ExampleWebApi.Controllers
                     }
 
                     reader.Close();
-                    new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                    return Json(mytasks, JsonRequestBehavior.AllowGet);
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    return Json(mytasks, JsonRequestBehavior.AllowGet);
                 }
-                return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
             }
         }
 
@@ -123,12 +89,12 @@ namespace ExampleWebApi.Controllers
 
         }
 
-        // DELETE: tasks/delete/id
+        // DELETE: tasks/delete/date/id
         [System.Web.Mvc.HttpDelete]
-        [System.Web.Http.Route("tasks/delete/{date}/{id}")]
-        public HttpResponseMessage Delete(string id)
+        [System.Web.Mvc.Route("tasks/delete/{date}/{id}")]
+        public HttpResponseMessage Delete(string date, string id)
         {
-            string queryString = "update dbo.Task set completed = 'true' where id = @id";
+            string queryString = "update dbo.Task set completed = 'true' where id = @id and date = @date";
 
             using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
@@ -137,6 +103,7 @@ namespace ExampleWebApi.Controllers
                 {
                     sqlCon.Open();
                     sqlCmd.Parameters.AddWithValue("@id", id);
+                    sqlCmd.Parameters.AddWithValue("@date", date);
                     sqlCmd.ExecuteNonQuery();
                     sqlCon.Close();
 
@@ -150,7 +117,6 @@ namespace ExampleWebApi.Controllers
                 return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
 
             }
-
 
         }
 
