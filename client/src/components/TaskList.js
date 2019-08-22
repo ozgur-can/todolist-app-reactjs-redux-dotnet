@@ -4,14 +4,14 @@ import { finishTask } from "../reduxlayer/actions";
 import toArray from "lodash.toarray";
 
 const Task = props =>
-  props.article ? (
-    toArray(props.article).map((data, i) => {
+  props.tasklist ? (
+    toArray(props.tasklist.results).map((data, i) => {
       return (
         <main key={i} className="main">
           <div className="wrap">
             <div className="item-row">
               <label className="check-flag">
-                <span className="check-flag-label">{data.title}</span>
+                <span className="check-flag-label">{data.name}</span>
                 <span className="checkbox">
                   <input
                     className="checkbox-native"
@@ -42,7 +42,7 @@ const Task = props =>
 let TaskList = props => <div>{Task(props)}</div>;
 
 const mapStateToProps = state => ({
-  article: state.news
+  tasklist: state.tasks
 });
 
 const mapDispatchToProps = dispatch => ({

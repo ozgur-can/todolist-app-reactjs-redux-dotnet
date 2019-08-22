@@ -6,13 +6,28 @@ using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
+using System.Web.Http.Cors;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-
+using System.Web.Mvc.Routing;
+using RouteAttribute = System.Web.Mvc.RouteAttribute;
+using HttpGetAttribute = System.Web.Mvc.HttpGetAttribute;
+using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
+using HttpDeleteAttribute = System.Web.Mvc.HttpDeleteAttribute;
 
 namespace ExampleWebApi.Controllers
 {
+    public class AllowCrossSiteJsonAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            base.OnActionExecuting(filterContext);
+        }
+    }
+
+    [EnableCors("*", "*", "*")]
     public class tasksController : Controller
     {
         string startupPath = Environment.CurrentDirectory;
@@ -21,9 +36,47 @@ namespace ExampleWebApi.Controllers
                                     AttachDbFilename=|DataDirectory|\taskdb.mdf;
                                     Integrated Security=True;User Instance=True;";
 
+        // GET: tasks
+        [HttpGet]
+        [Route("tasks")]
+        [AllowCrossSiteJson]
+        public JsonResult Index()
+        {
+            // return nothing if date is not specified in url
+            //return Json(null, JsonRequestBehavior.AllowGet);
+
+            string queryString = "select * from dbo.Task";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, con);
+                List<Task> mytasks = new List<Task>();
+
+                try
+                {
+                    con.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        mytasks.Add(new Task(reader[0].ToString(), reader[1].ToString(), Convert.ToBoolean(reader[2]), reader[3].ToString()));
+                    }
+                    reader.Close();
+                    return Json(mytasks, JsonRequestBehavior.AllowGet);
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return Json(mytasks, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // GET: tasks/details/date
-        [System.Web.Mvc.HttpGet]
-        [System.Web.Mvc.Route("tasks/details/{date}")]
+        [HttpGet]
+        [Route("tasks/details/{date}")]
+        [AllowCrossSiteJson]
         public JsonResult Details(string date)
         {
             string queryString = "select * from dbo.Task where date = @date";
@@ -53,7 +106,7 @@ namespace ExampleWebApi.Controllers
                     return Json(mytasks, JsonRequestBehavior.AllowGet);
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return Json(mytasks, JsonRequestBehavior.AllowGet);
                 }
@@ -61,8 +114,9 @@ namespace ExampleWebApi.Controllers
         }
 
         // POST: tasks/create
-        [System.Web.Mvc.HttpPost]
-        [System.Web.Http.Route("tasks/create")]
+        [HttpPost]
+        [Route("tasks/create")]
+        [AllowCrossSiteJson]
         public HttpResponseMessage Create([FromBody] string id, string name, bool completed, string date)
         {
             try
@@ -90,8 +144,9 @@ namespace ExampleWebApi.Controllers
         }
 
         // DELETE: tasks/delete/date/id
-        [System.Web.Mvc.HttpDelete]
-        [System.Web.Mvc.Route("tasks/delete/{date}/{id}")]
+        [HttpDelete]
+        [Route("tasks/delete/{date}/{id}")]
+        [AllowCrossSiteJson]
         public HttpResponseMessage Delete(string date, string id)
         {
             string queryString = "update dbo.Task set completed = 'true' where id = @id and date = @date";
@@ -121,8 +176,9 @@ namespace ExampleWebApi.Controllers
         }
 
         // DELETE: tasks/deleteall
-        [System.Web.Mvc.HttpDelete]
-        [System.Web.Http.Route("tasks/deleteall")]
+        [HttpDelete]
+        [Route("tasks/deleteall")]
+        [AllowCrossSiteJson]
         public HttpResponseMessage DeleteAll()
         {
             try

@@ -1,12 +1,12 @@
 import { put, takeLatest, all, call, delay, fork } from "redux-saga/effects";
-function* fetchTasks() {
+function* fetchTasks(action) {
   try {
     const json = yield fetch(
-      "https://newsapi.org/v2/top-headlines?country=tr&apiKey=25c4b24fb9074a7e867be11610fd7473"
+      "https://localhost:44341/tasks/details/" + action.urlDate
     ).then(res => res.json());
-    yield put({ type: "TASKS_RECEIVED", json: json.articles });
+    yield put({ type: "TASKS_RECEIVED", json: json, urlDate: action.urlDate });
   } catch (e) {
-    yield put({ type: "TASKS_FETCH_FAILED", message: e.message });
+    yield put({ type: "TASKS_FETCH_FAILED", message: e.message , urlDate: action.urlDate});
   }
 }
 
@@ -41,6 +41,11 @@ function* addTask(action) {
 function* finishTask(action) {
   //add delete request
   try {
+
+    yield fetch(
+      "https://localhost:44341/api/tasktodo/28-3-1994/31212/"  , {method:"DELETE"}
+    ).then(res => res.json());
+
     yield put({
       type: "TASK_FINISHED",
       id: action.id,

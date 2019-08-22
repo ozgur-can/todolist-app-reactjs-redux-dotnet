@@ -6,7 +6,6 @@ namespace ExampleWebApi.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Serializable]
     [Table("task")]
     public partial class Task
     {

@@ -1,7 +1,8 @@
 import shortid from "shortid";
 
-export const getTasks = () => ({
-  type: "GET_TASKS"
+export const getTasks = (date) => ({
+  type: "GET_TASKS",
+  urlDate: date
 });
 
 export const createTask = (text, date) => ({

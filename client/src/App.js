@@ -19,7 +19,10 @@ let App = props => {
 
   //get the all tasks as an initial event
   useEffect(() => {
-    props.getTasks();
+    props.getTasks(props.location.pathname.slice(
+      1,
+      props.location.pathname.length
+    ));
   }, [props]);
   return (
     <div>
@@ -64,7 +67,7 @@ let App = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getTasks: () => dispatch(getTasks())
+  getTasks: (date) => dispatch(getTasks(date))
 });
 
 export default withRouter(
