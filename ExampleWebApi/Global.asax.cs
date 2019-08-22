@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Autofac;
+using Autofac.Integration.Mvc;
+using ExampleWebApi.TaskService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -13,6 +17,14 @@ namespace ExampleWebApi
     {
         protected void Application_Start()
         {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterType<TaskRepo>().As<ITask>();
+
+            IContainer container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
