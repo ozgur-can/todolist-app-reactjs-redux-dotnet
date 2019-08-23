@@ -8,7 +8,6 @@ const Task = props =>
     toArray(props.tasklist).map((task, i) => {
       return (
         <main key={i} className="main">
-          {console.log(props.tasklist.length)}
           <div className="wrap">
             <div className="item-row">
               <label className="check-flag">

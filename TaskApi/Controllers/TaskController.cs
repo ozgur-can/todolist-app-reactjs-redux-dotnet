@@ -17,6 +17,8 @@ using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 using HttpDeleteAttribute = System.Web.Mvc.HttpDeleteAttribute;
 using TaskApi.TaskService;
 using TaskApi.Controllers.CorsEnabler;
+using HttpOptionsAttribute = System.Web.Mvc.HttpOptionsAttribute;
+using HttpHeadAttribute = System.Web.Mvc.HttpHeadAttribute;
 
 namespace TaskApi.Controllers
 {
@@ -63,9 +65,8 @@ namespace TaskApi.Controllers
                     reader.Close();
                     return Json(mytasks, JsonRequestBehavior.AllowGet);
 
-
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return Json(mytasks, JsonRequestBehavior.AllowGet);
                 }
@@ -91,7 +92,7 @@ namespace TaskApi.Controllers
         }
 
         // DELETE: tasks/delete/date/id
-        [HttpDelete]
+        [HttpHead]
         [Route("tasks/delete/{date}/{id}")]
         [AllowCrossSiteJson]
         public HttpResponseMessage Delete(string date, string id)

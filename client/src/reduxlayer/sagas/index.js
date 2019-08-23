@@ -1,12 +1,4 @@
-import {
-  put,
-  takeLatest,
-  all,
-  call,
-  delay,
-  fork,
-  takeEvery
-} from "redux-saga/effects";
+import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
 
 function* fetchTasks(action) {
   try {
@@ -48,8 +40,6 @@ function* addTask(action) {
       })
     }).then(res => res.json());
 
-    //wait 1 sec after clicked "create task button"
-    // yield delay(5000);
     yield put({
       type: "TASK_ADDED",
       id: action.id,
@@ -57,22 +47,28 @@ function* addTask(action) {
       date: action.date,
       completed: false
     });
-    // after task added, call fetchTask again
-    yield call(fetchTasks);
+
+    // fetch the new state of the task list
+    yield put({ type: "GET_TASKS", urlDate: action.date });
   } catch (e) {
-    console.log("adding task failed");
+    yield put({
+      type: "ADDING_FAILED",
+      id: action.id,
+      text: action.text,
+      date: action.date
+    });
   }
 }
 
 function* finishTask(action) {
   //add delete request
   try {
-    // yield fetch(
-    //   `https://localhost:44341/tasks/delete/${action.date}/${action.id}`,
-    //   {
-    //     method: "HEAD"
-    //   }
-    // );
+    yield fetch(
+      `https://localhost:44341/tasks/delete/${action.date}/${action.id}`,
+      {
+        method: "HEAD"
+      }
+    );
 
     yield put({
       type: "TASK_FINISHED",
@@ -82,9 +78,9 @@ function* finishTask(action) {
       date: action.date
     });
 
-    // after task deleted, call fetchTask again
+    yield delay(1000);
+    // after delete, fetch the new state of the task list
     yield put({ type: "GET_TASKS", urlDate: action.date });
-    // yield call(fetchTasks, action.date);
   } catch (e) {
     console.log("deleting task failed");
   }
@@ -99,8 +95,7 @@ function* watchDeleteTask() {
 }
 
 function* watchFetchTasks() {
-  yield takeEvery("GET_TASKS", fetchTasks);
-  // yield takeEvery("GET_TASKS", fetchTasks);
+  yield takeLatest("GET_TASKS", fetchTasks);
 }
 
 export default function* rootSaga() {

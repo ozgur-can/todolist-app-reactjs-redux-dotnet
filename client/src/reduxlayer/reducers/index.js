@@ -1,4 +1,4 @@
-const reducer = (state = { toggleTaskModal: false, urlDate:"" }, action) => {
+const reducer = (state = { toggleTaskModal: false, urlDate: "" }, action) => {
   switch (action.type) {
     case "CREATE_TASK":
       return {
@@ -15,9 +15,14 @@ const reducer = (state = { toggleTaskModal: false, urlDate:"" }, action) => {
     case "TOGGLE_TASK_MODAL":
       return { ...state, toggleTaskModal: action.toggleTaskModal };
     case "TASKS_RECEIVED":
-      return { toggleTaskModal: false, tasks: action.json, loading: false, urlDate:action.urlDate };
+      return {
+        toggleTaskModal: false,
+        tasks: action.json,
+        loading: false,
+        urlDate: action.urlDate
+      };
     case "TASKS_FETCH_FAILED":
-      return { ...state, news: null, loading: true };
+      return { ...state, news: null, tasks: null, loading: true };
     default:
       return state;
   }

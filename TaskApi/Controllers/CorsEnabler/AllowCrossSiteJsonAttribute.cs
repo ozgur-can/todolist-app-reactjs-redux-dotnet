@@ -10,7 +10,9 @@ namespace TaskApi.Controllers.CorsEnabler
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Methods", "*");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type");
             base.OnActionExecuting(filterContext);
         }
     }
