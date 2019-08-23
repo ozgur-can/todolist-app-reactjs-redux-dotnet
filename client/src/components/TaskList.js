@@ -5,18 +5,21 @@ import toArray from "lodash.toarray";
 
 const Task = props =>
   props.tasklist ? (
-    toArray(props.tasklist.results).map((data, i) => {
+    toArray(props.tasklist).map((task, i) => {
       return (
         <main key={i} className="main">
+          {console.log(props.tasklist.length)}
           <div className="wrap">
             <div className="item-row">
               <label className="check-flag">
-                <span className="check-flag-label">{data.name}</span>
+                <span className="check-flag-label">{task.name}</span>
                 <span className="checkbox">
                   <input
                     className="checkbox-native"
                     type="checkbox"
-                    onClick={() => props.finishTask(data.title, "59")}
+                    onClick={() => {
+                      props.finishTask(task.name, task.id, task.date);
+                    }}
                   />
                   <span className="checkmark">
                     <svg viewBox="0 0 24 24">
@@ -46,7 +49,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  finishTask: (task, id) => dispatch(finishTask(task, id))
+  finishTask: (task, id, date) => dispatch(finishTask(task, id, date))
 });
 
 export default connect(

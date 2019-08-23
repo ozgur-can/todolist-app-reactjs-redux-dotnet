@@ -1,12 +1,33 @@
-import { put, takeLatest, all, call, delay, fork } from "redux-saga/effects";
+import {
+  put,
+  takeLatest,
+  all,
+  call,
+  delay,
+  fork,
+  takeEvery
+} from "redux-saga/effects";
+
 function* fetchTasks(action) {
   try {
     const json = yield fetch(
-      "https://localhost:44341/tasks/details/" + action.urlDate
+      `https://localhost:44341/tasks/details/${action.urlDate}`
     ).then(res => res.json());
-    yield put({ type: "TASKS_RECEIVED", json: json, urlDate: action.urlDate });
+
+    if (Array.isArray(json) && json.length === 0) {
+      throw new Error("task list empty");
+    } else
+      yield put({
+        type: "TASKS_RECEIVED",
+        json: json,
+        urlDate: action.urlDate
+      });
   } catch (e) {
-    yield put({ type: "TASKS_FETCH_FAILED", message: e.message , urlDate: action.urlDate});
+    yield put({
+      type: "TASKS_FETCH_FAILED",
+      message: e.message,
+      urlDate: action.urlDate
+    });
   }
 }
 
@@ -14,16 +35,21 @@ function* addTask(action) {
   // add post request
   try {
     //example fetch post req
-    // const json2 = yield fetch("https://productlistapi.herokuapp.com/", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({ sku: "123412", name: "ozgur", price: 12 })
-    // }).then(res => res.json());
+    yield fetch("https://localhost:44341/tasks/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: action.id,
+        name: action.text,
+        completed: false,
+        date: action.date
+      })
+    }).then(res => res.json());
 
     //wait 1 sec after clicked "create task button"
-    yield delay(1000);
+    // yield delay(5000);
     yield put({
       type: "TASK_ADDED",
       id: action.id,
@@ -41,19 +67,24 @@ function* addTask(action) {
 function* finishTask(action) {
   //add delete request
   try {
-
-    yield fetch(
-      "https://localhost:44341/api/tasktodo/28-3-1994/31212/"  , {method:"DELETE"}
-    ).then(res => res.json());
+    // yield fetch(
+    //   `https://localhost:44341/tasks/delete/${action.date}/${action.id}`,
+    //   {
+    //     method: "HEAD"
+    //   }
+    // );
 
     yield put({
       type: "TASK_FINISHED",
       id: action.id,
       text: action.text,
-      completed: true
+      completed: true,
+      date: action.date
     });
+
     // after task deleted, call fetchTask again
-    yield call(fetchTasks);
+    yield put({ type: "GET_TASKS", urlDate: action.date });
+    // yield call(fetchTasks, action.date);
   } catch (e) {
     console.log("deleting task failed");
   }
@@ -68,7 +99,8 @@ function* watchDeleteTask() {
 }
 
 function* watchFetchTasks() {
-  yield takeLatest("GET_TASKS", fetchTasks);
+  yield takeEvery("GET_TASKS", fetchTasks);
+  // yield takeEvery("GET_TASKS", fetchTasks);
 }
 
 export default function* rootSaga() {

@@ -1,6 +1,6 @@
 import shortid from "shortid";
 
-export const getTasks = (date) => ({
+export const getTasks = date => ({
   type: "GET_TASKS",
   urlDate: date
 });
@@ -12,10 +12,11 @@ export const createTask = (text, date) => ({
   date: date
 });
 
-export const finishTask = (text, id) => ({
+export const finishTask = (text, id, date) => ({
   type: "FINISH_TASK",
   id: id,
-  text: text
+  text: text,
+  date: date
 });
 
 export const togglePopup = value => ({
