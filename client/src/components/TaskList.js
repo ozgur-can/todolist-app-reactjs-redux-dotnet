@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { finishTask } from "../reduxlayer/actions";
 import toArray from "lodash.toarray";
 
-const Task = props =>
-  props.tasklist ? (
+const Task = props => {
+  return props.tasklist ? (
     toArray(props.tasklist).map((task, i) => {
       return (
         <main key={i} className="main">
@@ -16,9 +16,9 @@ const Task = props =>
                   <input
                     className="checkbox-native"
                     type="checkbox"
-                    onClick={() => {
-                      props.finishTask(task.name, task.id, task.date);
-                    }}
+                    onClick={() =>
+                      props.finishTask(task.name, task.id, task.date)
+                    }
                   />
                   <span className="checkmark">
                     <svg viewBox="0 0 24 24">
@@ -40,6 +40,7 @@ const Task = props =>
   ) : (
     <div>Loading or no element is listed</div>
   );
+};
 
 let TaskList = props => <div>{Task(props)}</div>;
 

@@ -22,7 +22,6 @@ using HttpHeadAttribute = System.Web.Mvc.HttpHeadAttribute;
 
 namespace TaskApi.Controllers
 {
-    [EnableCors("*", "*", "*")]
     public class TasksController : Controller
     {
         ITask taskService;

@@ -14,6 +14,8 @@ const reducer = (state = { toggleTaskModal: false, urlDate: "" }, action) => {
       return { ...state, id: action.id, text: action.text, completed: true };
     case "TOGGLE_TASK_MODAL":
       return { ...state, toggleTaskModal: action.toggleTaskModal };
+    case "VISIBILITY_CHECKBOX":
+      return { ...state, visCheckbox: !action.visCheckbox };
     case "TASKS_RECEIVED":
       return {
         toggleTaskModal: false,

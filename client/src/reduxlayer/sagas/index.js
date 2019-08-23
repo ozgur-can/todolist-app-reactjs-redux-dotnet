@@ -1,4 +1,5 @@
 import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
+import axios from "axios";
 
 function* fetchTasks(action) {
   try {
@@ -24,13 +25,12 @@ function* fetchTasks(action) {
 }
 
 function* addTask(action) {
-  // add post request
   try {
-    //example fetch post req
     yield fetch("https://localhost:44341/tasks/create", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({
         id: action.id,
@@ -38,7 +38,25 @@ function* addTask(action) {
         completed: false,
         date: action.date
       })
-    }).then(res => res.json());
+    });
+
+    // axios
+    //   .post(
+    //     `https://localhost:44341/tasks/create`,
+    //     {
+    //       id: action.id,
+    //       name: action.text,
+    //       completed: false,
+    //       date: action.date
+    //     },
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         "Access-Control-Allow-Origin": "*"
+    //       }
+    //     }
+    //   )
+    //   .then(() => console.log("oldu"));
 
     yield put({
       type: "TASK_ADDED",
@@ -61,7 +79,6 @@ function* addTask(action) {
 }
 
 function* finishTask(action) {
-  //add delete request
   try {
     yield fetch(
       `https://localhost:44341/tasks/delete/${action.date}/${action.id}`,
