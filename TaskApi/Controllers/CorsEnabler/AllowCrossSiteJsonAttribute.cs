@@ -14,8 +14,10 @@ namespace TaskApi.Controllers.CorsEnabler
             //filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Max-Age", "86400");
             //filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Credentials", "true");
             filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Methods", "*");
-            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            filterContext.RequestContext.HttpContext.Response.AddHeader("Content-Type", "application/json");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Content-type", "application/json");
+            filterContext.RequestContext.HttpContext.Response.AddHeader("Accept", "application/json");
+
             base.OnActionExecuting(filterContext);
         }
     }

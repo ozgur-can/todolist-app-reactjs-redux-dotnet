@@ -1,7 +1,7 @@
 import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
-// import axios from "axios";
-import bearer from "bearer";
-import shortid from "shortid";
+import axios from "axios";
+//`https://localhost:44341/tasks/details/${action.urlDate}`
+
 function* fetchTasks(action) {
   try {
     const json = yield fetch(
@@ -27,11 +27,10 @@ function* fetchTasks(action) {
 
 function* addTask(action) {
   try {
-    yield fetch("https://localhost:44341/tasks/create", {
+    yield fetch("https://localhost:44341/api/tasktodo/create", {
       method: "POST",
-      mode: "cors",
       headers: {
-        "content-type": "application/json"
+        "Content-type": "application/json"
       },
       body: JSON.stringify({
         id: action.id,
@@ -40,22 +39,15 @@ function* addTask(action) {
         date: action.date
       })
     });
-
-    // yield axios.post(
-    //   `https://localhost:44341/tasks/create`,
-    //   {
+    // https://localhost:44341/tasks/create
+    // yield axios
+    //   .post(`https://localhost:44341/tasks/create`, {
     //     id: action.id,
     //     name: action.text,
     //     completed: false,
     //     date: action.date
-    //   },
-    //   {
-    //     headers: {
-    //       "Content-Type": "text/plain",
-    //       "Access-Control-Allow-Origin": "*"
-    //     }
-    //   }
-    // );
+    //   })
+    //   .then(res => console.log(res));
 
     yield put({
       type: "TASK_ADDED",

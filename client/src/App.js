@@ -21,7 +21,7 @@ let App = props => {
   //get the all tasks as an initial event
   useEffect(() => {
     props.getTasks(verifyDate(dateURL));
-  }, [props]);
+  }, [props, dateURL]);
   return (
     <div>
       <div className="page-wrap">
