@@ -8,12 +8,16 @@ const dateChecker = date => {
 };
 
 export const verifyDate = date => {
-  // check if date for example 23-8-2019, make it 23-08-2019
-  let tempDateURL = date.split("-");
+  if (date !== "") {
+    // check if date for example 23-8-2019, make it 23-08-2019
+    let tempDateURL = date.split("-");
 
-  if (tempDateURL[0].length === 1) tempDateURL[0] = "0".concat(tempDateURL[0]);
-  if (tempDateURL[1].length === 1) tempDateURL[1] = "0".concat(tempDateURL[1]);
-  return tempDateURL.join("-");
+    if (tempDateURL[0].length === 1)
+      tempDateURL[0] = "0".concat(tempDateURL[0]);
+    if (tempDateURL[1].length === 1)
+      tempDateURL[1] = "0".concat(tempDateURL[1]);
+    return tempDateURL.join("-");
+  }
 };
 
 const DateData = props => {

@@ -85,7 +85,6 @@ namespace TaskApi.Controllers
         // POST: tasks/create
         [HttpPost]
         [Route("tasks/create")]
-        [Authorize]
         [AllowCrossSiteJson]
         public HttpResponseMessage Create([FromBody] string id, string name, bool completed, string date)
         {
