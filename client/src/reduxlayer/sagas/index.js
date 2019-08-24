@@ -1,13 +1,13 @@
 import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
-import axios from "axios";
-//`https://localhost:44341/tasks/details/${action.urlDate}`
 
 function* fetchTasks(action) {
   try {
+    // get request to get the task list
     const json = yield fetch(
-      `https://localhost:44341/tasks/details/${action.urlDate}`
+      `https://localhost:44341/api/tasktodo/gettasks/${action.urlDate}`
     ).then(res => res.json());
 
+    // check task list array is empty or not
     if (Array.isArray(json) && json.length === 0) {
       throw new Error("task list empty");
     } else
@@ -27,6 +27,7 @@ function* fetchTasks(action) {
 
 function* addTask(action) {
   try {
+    // post request to add a task
     yield fetch("https://localhost:44341/api/tasktodo/create", {
       method: "POST",
       headers: {
@@ -39,16 +40,8 @@ function* addTask(action) {
         date: action.date
       })
     });
-    // https://localhost:44341/tasks/create
-    // yield axios
-    //   .post(`https://localhost:44341/tasks/create`, {
-    //     id: action.id,
-    //     name: action.text,
-    //     completed: false,
-    //     date: action.date
-    //   })
-    //   .then(res => console.log(res));
 
+    // if request success, then send "TASK_ADDED" action with these parameters
     yield put({
       type: "TASK_ADDED",
       id: action.id,
@@ -57,9 +50,10 @@ function* addTask(action) {
       completed: false
     });
 
-    // fetch the new state of the task list
+    // fetch tasks, after task added
     yield put({ type: "GET_TASKS", urlDate: action.date });
   } catch (e) {
+    // catch when request fail
     yield put({
       type: "ADDING_FAILED",
       id: action.id,
@@ -71,13 +65,15 @@ function* addTask(action) {
 
 function* finishTask(action) {
   try {
+    // delete request to finish a task
     yield fetch(
-      `https://localhost:44341/tasks/delete/${action.date}/${action.id}`,
+      `https://localhost:44341/api/tasktodo/delete/${action.date}/${action.id}`,
       {
         method: "DELETE"
       }
     );
 
+    // if request success, then send "TASK_FINISHED" action with these parameters
     yield put({
       type: "TASK_FINISHED",
       id: action.id,
@@ -86,14 +82,17 @@ function* finishTask(action) {
       date: action.date
     });
 
+    // wait 1 second, after clicked task checkbox
     yield delay(1000);
-    // after delete, fetch the new state of the task list
+    // after deleting, fetch the new state of the task list
     yield put({ type: "GET_TASKS", urlDate: action.date });
   } catch (e) {
-    console.log("deleting task failed");
+    // catch when request fail
+    yield put({ type: "TASK_FINISH_FAILED" });
   }
 }
 
+// redux actions and its trigger saga functions
 function* watchAddTask() {
   yield takeLatest("CREATE_TASK", addTask);
 }
@@ -106,6 +105,7 @@ function* watchFetchTasks() {
   yield takeLatest("GET_TASKS", fetchTasks);
 }
 
+// used fork for executing functions at the same time
 export default function* rootSaga() {
   yield all([fork(watchFetchTasks), fork(watchDeleteTask), fork(watchAddTask)]);
 }

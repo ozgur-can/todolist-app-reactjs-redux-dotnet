@@ -20,6 +20,7 @@ let App = props => {
 
   //get the all tasks as an initial event
   useEffect(() => {
+    // verify the date if it written wrong #ex : 23-8-2019 change => 23-08-2019
     props.getTasks(verifyDate(dateURL));
   }, [props, dateURL]);
   return (
@@ -65,9 +66,11 @@ let App = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  // redux dispatch function to get tasks for specific date
   getTasks: date => dispatch(getTasks(date))
 });
 
+// used "withRouter" to access the url in the browser and "connect" for connecting to the redux state
 export default withRouter(
   connect(
     null,

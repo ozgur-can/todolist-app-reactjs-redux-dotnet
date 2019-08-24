@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { finishTask } from "../reduxlayer/actions";
-import toArray from "lodash.toarray";
+import toArray from "lodash.toarray"; // Used this for transform object to a array for handle easily
 
 const Task = props => {
-  return props.tasklist ? (
-    toArray(props.tasklist).map((task, i) => {
+  // tasklist is not empty then print tasklist
+  if (typeof props.tasklist !== "undefined")
+    return toArray(props.tasklist.results).map((task, i) => {
       return (
         <main key={i} className="main">
           <div className="wrap">
@@ -36,19 +37,19 @@ const Task = props => {
           </div>
         </main>
       );
-    })
-  ) : (
-    <div>Loading or no element is listed</div>
-  );
+    });
+  else return <div>Loading or no element is listed</div>;
 };
 
 let TaskList = props => <div>{Task(props)}</div>;
 
 const mapStateToProps = state => ({
+  // get tasklist from redux state
   tasklist: state.tasks
 });
 
 const mapDispatchToProps = dispatch => ({
+  // redux dispatch function to finish task
   finishTask: (task, id, date) => dispatch(finishTask(task, id, date))
 });
 

@@ -24,7 +24,7 @@ const reducer = (state = { toggleTaskModal: false, urlDate: "" }, action) => {
         urlDate: action.urlDate
       };
     case "TASKS_FETCH_FAILED":
-      return { ...state, news: null, tasks: null, loading: true };
+      return { ...state, tasks: null, loading: true };
     default:
       return state;
   }

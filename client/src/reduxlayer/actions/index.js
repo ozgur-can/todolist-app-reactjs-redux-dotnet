@@ -1,5 +1,7 @@
+// shortid for generate unique task ids
 import shortid from "shortid";
 
+// simple redux actions
 export const getTasks = date => ({
   type: "GET_TASKS",
   urlDate: date

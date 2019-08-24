@@ -4,6 +4,7 @@ import { createTask, togglePopup } from "../reduxlayer/actions";
 import Modal from "react-responsive-modal";
 
 const CreateTaskModal = props => {
+  // I've used only here react hooks' usestate to keep taskname just because it's simple and easy
   const [inputData, updateInput] = useState("");
 
   return (
@@ -29,13 +30,13 @@ const CreateTaskModal = props => {
               className="btn"
               type="submit"
               value="Create"
-              disabled={!inputData} // TODO: inputData "" ise disabled olacak
+              disabled={!inputData}
               onClick={e => {
                 e.preventDefault();
-                props.togglePopup(false);
                 props.createTask(inputData, props.date);
+                props.togglePopup(false);
                 updateInput("");
-                //added create task dispatcher
+                // added create task dispatcher and togglePopup dispatcher
               }}
             />
           </div>

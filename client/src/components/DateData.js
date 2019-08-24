@@ -1,5 +1,6 @@
 import React from "react";
 
+// check urldate whether is true or not
 const dateChecker = date => {
   var regexCode = new RegExp(
     "^((0?[1-9]|[12][0-9]|3[01])[-](0?[1-9]|1[012])[-](19|20)?[0-9]{2})*$"
@@ -7,9 +8,9 @@ const dateChecker = date => {
   return regexCode.test(date);
 };
 
+// check if date for example 23-8-2019, make it 23-08-2019
 export const verifyDate = date => {
   if (date !== "") {
-    // check if date for example 23-8-2019, make it 23-08-2019
     let tempDateURL = date.split("-");
 
     if (tempDateURL[0].length === 1)
@@ -20,6 +21,7 @@ export const verifyDate = date => {
   }
 };
 
+// if date is true, print and verify
 const DateData = props => {
   return dateChecker(props.match.params.datedata) ? (
     <div>

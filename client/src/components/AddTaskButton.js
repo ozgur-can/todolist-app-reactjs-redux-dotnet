@@ -18,6 +18,7 @@ const AddTaskButton = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  // redux dispatch function for show/hide create task modal
   togglePopup: value => dispatch(togglePopup(value))
 });
 
