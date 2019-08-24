@@ -1,30 +1,58 @@
 [
-    {
-        "owner": "Frank Zappa",
-        "quote": "Without deviation from the norm, progress is not possible."
-    },
-    {
-        "owner": "Baruch Spinoza",
-        "quote": "No matter how thin you slice it, there will always be two sides."
-    },
-    {
-        "owner": "Stephen King",
-        "quote": "We make up horrors to help us deal with the real ones."
-    },
-    {
-        "owner": "John Lennon",
-        "quote": "You may say I’m a dreamer, but I’m not the only one. I hope someday you’ll join us, and the world will be as one."
-    },
-    {
-        "owner": "Stephen Hawking",
-        "quote": "Quiet people have the loudest minds."
-    },
-	{
-		"owner": "Janis Joplin",
-		"quote": "I’m one of those regular weird people."
-	},
-	{
-		"owner": "Tim Burton",
-		"quote": "Anybody with artistic ambitions is always trying to reconnect with the way they saw things as a child."
-	}
+  {
+    "owner": "Frank Zappa",
+    "quote": "Without deviation from the norm, progress is not possible."
+  },
+  {
+    "owner": "Baruch Spinoza",
+    "quote": "No matter how thin you slice it, there will always be two sides."
+  },
+  {
+    "owner": "John Lennon",
+    "quote": "You may say I’m a dreamer, but I’m not the only one. I hope someday you’ll join us, and the world will be as one."
+  },
+  {
+    "owner": "Stephen Hawking",
+    "quote": "Quiet people have the loudest minds."
+  },
+  {
+    "owner": "Janis Joplin",
+    "quote": "I’m one of those regular weird people."
+  },
+  {
+    "owner": "Tim Burton",
+    "quote": "Anybody with artistic ambitions is always trying to reconnect with the way they saw things as a child."
+  },
+  {
+    "owner": "Nicolas Chamfort",
+    "quote": "A day without laughter is a day wasted."
+  },
+  {
+    "owner": "Mother Teresa",
+    "quote": "Peace begins with a smile.."
+  },
+  {
+    "owner": "Bob Dylan",
+    "quote": "Act the way you'd like to be and soon you'll be the way you'd like to act."
+  },
+  {
+    "owner": "Elbert Hubbard",
+    "quote": "The line between failure and success is so fine. . . that we are often on the line and do not know it."
+  },
+  {
+    "owner": "Confucius",
+    "quote": "When you have faults, do not fear to abandon them."
+  },
+  {
+    "owner": "Albert Camus",
+    "quote": "Life is a sum of all your choices."
+  },
+  {
+    "owner": "Frank Zappa",
+    "quote": "A mind is like a parachute. It doesn't work if it is not open."
+  },
+  {
+    "owner": "Chuck Palahniuk",
+    "quote": "All the effort in the world won't matter if you're not inspired."
+  }
 ]
