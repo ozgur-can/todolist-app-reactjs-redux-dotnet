@@ -1,6 +1,7 @@
 import { put, takeLatest, all, delay, fork } from "redux-saga/effects";
-import axios from "axios";
-
+// import axios from "axios";
+import bearer from "bearer";
+import shortid from "shortid";
 function* fetchTasks(action) {
   try {
     const json = yield fetch(
@@ -28,9 +29,9 @@ function* addTask(action) {
   try {
     yield fetch("https://localhost:44341/tasks/create", {
       method: "POST",
+      mode: "cors",
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+        "content-type": "application/json"
       },
       body: JSON.stringify({
         id: action.id,
@@ -40,23 +41,21 @@ function* addTask(action) {
       })
     });
 
-    // axios
-    //   .post(
-    //     `https://localhost:44341/tasks/create`,
-    //     {
-    //       id: action.id,
-    //       name: action.text,
-    //       completed: false,
-    //       date: action.date
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "Access-Control-Allow-Origin": "*"
-    //       }
+    // yield axios.post(
+    //   `https://localhost:44341/tasks/create`,
+    //   {
+    //     id: action.id,
+    //     name: action.text,
+    //     completed: false,
+    //     date: action.date
+    //   },
+    //   {
+    //     headers: {
+    //       "Content-Type": "text/plain",
+    //       "Access-Control-Allow-Origin": "*"
     //     }
-    //   )
-    //   .then(() => console.log("oldu"));
+    //   }
+    // );
 
     yield put({
       type: "TASK_ADDED",
@@ -83,7 +82,7 @@ function* finishTask(action) {
     yield fetch(
       `https://localhost:44341/tasks/delete/${action.date}/${action.id}`,
       {
-        method: "HEAD"
+        method: "DELETE"
       }
     );
 

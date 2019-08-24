@@ -4,6 +4,7 @@ import CreateTaskModal from "./components/CreateTaskModal";
 import TaskList from "./components/TaskList";
 import AddTaskButton from "./components/AddTaskButton";
 import DateData from "./components/DateData";
+import { verifyDate } from "./components/DateData";
 import { connect } from "react-redux";
 import { getTasks } from "./reduxlayer/actions";
 import { Route } from "react-router-dom";
@@ -11,7 +12,7 @@ import { withRouter } from "react-router";
 import "./css/vegaapp.css";
 
 let App = props => {
-  //dateURL-> get the date in the end of url(dd-mm-yyyy)
+  //dateURL-> get the date at the end of url(dd-mm-yyyy)
   let dateURL = props.location.pathname.slice(
     1,
     props.location.pathname.length
@@ -19,15 +20,12 @@ let App = props => {
 
   //get the all tasks as an initial event
   useEffect(() => {
-    props.getTasks(props.location.pathname.slice(
-      1,
-      props.location.pathname.length
-    ));
+    props.getTasks(verifyDate(dateURL));
   }, [props]);
   return (
     <div>
       <div className="page-wrap">
-        <CreateTaskModal date={dateURL} />
+        <CreateTaskModal date={verifyDate(dateURL)} />
         <header className="header">
           <div className="wrap">
             <AddTaskButton />
@@ -67,7 +65,7 @@ let App = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getTasks: (date) => dispatch(getTasks(date))
+  getTasks: date => dispatch(getTasks(date))
 });
 
 export default withRouter(

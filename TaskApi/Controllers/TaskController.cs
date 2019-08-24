@@ -19,6 +19,7 @@ using TaskApi.TaskService;
 using TaskApi.Controllers.CorsEnabler;
 using HttpOptionsAttribute = System.Web.Mvc.HttpOptionsAttribute;
 using HttpHeadAttribute = System.Web.Mvc.HttpHeadAttribute;
+using AuthorizeAttribute = System.Web.Mvc.AuthorizeAttribute;
 
 namespace TaskApi.Controllers
 {
@@ -84,13 +85,14 @@ namespace TaskApi.Controllers
         // POST: tasks/create
         [HttpPost]
         [Route("tasks/create")]
+        [Authorize]
         [AllowCrossSiteJson]
         public HttpResponseMessage Create([FromBody] string id, string name, bool completed, string date)
         {
             return TaskService.AddTask(new Task(id, name, completed, date));
         }
 
-        // DELETE: tasks/delete/date/id
+        // HEAD: tasks/delete/date/id
         [HttpHead]
         [Route("tasks/delete/{date}/{id}")]
         [AllowCrossSiteJson]
