@@ -11,39 +11,39 @@ using TaskApi.TaskService;
 
 namespace TaskApi.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TaskTodoController : ApiController
     {
-        TaskRepo taskRepo;
-        public TaskRepo TaskRepo { get => taskRepo; set => taskRepo = value; }
+        // ITask which is we gave permissions to use here, with Autofac
+        ITask taskService;
+        public ITask TaskService { get => taskService; set => taskService = value; }
 
-        public TaskTodoController()
+        public TaskTodoController(ITask TService)
         {
-            TaskRepo = new TaskRepo();
+            TaskService = TService;
         }
 
-        // POST: api/TaskTodo/create
+        // create a new task
         [Route("api/tasktodo/create")]
         [HttpPost]
         public HttpResponseMessage Post([FromBody]Task task)
         {
-            return TaskRepo.AddTask(task);
+            return TaskService.AddTask(task);
         }
 
-        // GET: api/TaskTodo/5
+        // get uncompleted tasks by date
         [Route("api/tasktodo/gettasks/{date}")]
         [HttpGet]
         public IHttpActionResult Get(string date)
         {
-            return Ok(new { results = TaskRepo.GetTaskByDate(date) });
+            return Ok(new { results = TaskService.GetTaskByDate(date) });
         }
 
-        // DELETE: api/TaskTodo/5
+        // finish tasks
         [Route("api/tasktodo/delete/{date}/{id}")]
         [HttpDelete]
         public HttpResponseMessage Delete(string date, string id)
         {
-            return TaskRepo.FinishTask(date, id);
+            return TaskService.FinishTask(date, id);
         }
 
     }

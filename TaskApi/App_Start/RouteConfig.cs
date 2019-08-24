@@ -17,7 +17,7 @@ namespace TaskApi
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{date}/{id}",
-                defaults: new { controller = "Tasks", action = "Index", date = UrlParameter.Optional, id = UrlParameter.Optional }
+                defaults: new { controller = "TasksTodo", action = "Index", date = UrlParameter.Optional, id = UrlParameter.Optional }
             );
 
         }

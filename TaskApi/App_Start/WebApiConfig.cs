@@ -12,7 +12,9 @@ namespace TaskApi
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            var cors = new EnableCorsAttribute("*", "*", "*");
+
+            // Enable cors for the reactjs client
+            var cors = new EnableCorsAttribute("http://localhost:3000", "*", "GET,POST,DELETE");
             config.EnableCors(cors);
 
             // Web API routes

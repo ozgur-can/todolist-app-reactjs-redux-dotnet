@@ -4,9 +4,8 @@ import { finishTask } from "../reduxlayer/actions";
 import toArray from "lodash.toarray"; // Used this for transform object to a array for handle easily
 
 const Task = props => {
-  // tasklist is not empty then print tasklist
-  if (typeof props.tasklist !== "undefined")
-    return toArray(props.tasklist.results).map((task, i) => {
+  return props.tasklist ? (
+    toArray(props.tasklist.results).map((task, i) => {
       return (
         <main key={i} className="main">
           <div className="wrap">
@@ -37,8 +36,10 @@ const Task = props => {
           </div>
         </main>
       );
-    });
-  else return <div>Loading or no element is listed</div>;
+    })
+  ) : (
+    <div>Loading or no element is listed</div>
+  );
 };
 
 let TaskList = props => <div>{Task(props)}</div>;

@@ -115,7 +115,6 @@ namespace TaskApi.TaskService
             catch (Exception)
             {
                 return null;
-                //throw;
             }
         }
     }
