@@ -42,11 +42,13 @@ namespace TaskApi.TaskService
                     sqlCmd.ExecuteNonQuery();
                     sqlCon.Close();
 
+                    // if success send 200 code
                     return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 }
             }
             catch (Exception)
             {
+                // if fails send 400 code
                 return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
             }
         }
@@ -70,12 +72,14 @@ namespace TaskApi.TaskService
                     sqlCmd.ExecuteNonQuery();
                     sqlCon.Close();
 
+                    // if success send 200 code
                     return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 }
             }
 
             catch (Exception)
             {
+                // if fails send 400 code
                 return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
             }
 
@@ -84,6 +88,7 @@ namespace TaskApi.TaskService
         public List<Task> GetTaskByDate(string date)
         {
             // list tasks for given date
+
             List<Task> myTasks = new List<Task>();
 
             try
@@ -109,11 +114,13 @@ namespace TaskApi.TaskService
                     reader.Close();
                     sqlCon.Close();
 
+                    // return tasks if success
                     return myTasks;
                 }
             }
             catch (Exception)
             {
+                // if fails to fetch push null
                 return null;
             }
         }
