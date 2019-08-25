@@ -28,8 +28,8 @@
     "quote": "A day without laughter is a day wasted."
   },
   {
-    "owner": "Mother Teresa",
-    "quote": "Peace begins with a smile.."
+    "owner": "William James",
+    "quote": "Action may not always bring happiness, but there is no happiness without action."
   },
   {
     "owner": "Bob Dylan",
@@ -54,5 +54,13 @@
   {
     "owner": "Chuck Palahniuk",
     "quote": "All the effort in the world won't matter if you're not inspired."
+  },
+  {
+    "owner": "Pablo Picasso",
+    "quote": "Learn the rules like a pro, so you can break them like an artist."
+  },
+  {
+    "owner": "Herman Hesse",
+    "quote": "Every experience has its element of magic."
   }
 ]

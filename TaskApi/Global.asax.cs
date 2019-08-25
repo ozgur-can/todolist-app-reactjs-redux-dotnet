@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Integration.Mvc;
 using TaskApi.TaskService;
 using System;
 using System.Collections.Generic;
