@@ -17,6 +17,8 @@ so after add a task or finish a task, will order by random id
 -Instructions-
 
 1- After entering TaskApi folder, open TaskApi.sln with visual studio, and start it by clicking IISExpress button on top
-2- For react-side, enter client folder, execute npm i && npm start with cmd/console
-3- Database is already set and at App_Data folder and no need to change the connection string
-4- Use the app with http://localhost:3000/d-m-yyyy
+2- When start the server first time, it may give nuget package is not installed error, then delete the bin folder just created,
+it will install the packages automaticly
+3- For react-side, enter client folder, execute npm i && npm start with cmd/console
+4- Database is already set and at App_Data folder and no need to change the connection string
+5- Use the app with http://localhost:3000/d-m-yyyy
