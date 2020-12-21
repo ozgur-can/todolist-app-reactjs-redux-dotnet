@@ -11,7 +11,7 @@ import { Route } from "react-router-dom";
 import { withRouter } from "react-router";
 import "./css/vegaapp.css";
 
-let App = props => {
+let App = (props) => {
   //dateURL-> get the date at the end of url(dd-mm-yyyy)
   let dateURL = props.location.pathname.slice(
     1,
@@ -37,11 +37,6 @@ let App = props => {
           </div>
           <div className="header-inner">
             <div className="wrap">
-              <img
-                className="logo"
-                src={require("./images/vegait-logo.svg")}
-                alt="VegaIT"
-              />
               <div className="date-wrap">
                 <img
                   className="icon"
@@ -57,7 +52,7 @@ let App = props => {
         <TaskList />
         <footer className="footer">
           <div className="wrap">
-            <span className="copy">&copy; 2018 Vega IT Sourcing</span>
+            <span className="copy">&copy; 2019 Özgür Can Altınok</span>
           </div>
         </footer>
       </div>
@@ -65,15 +60,10 @@ let App = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // redux dispatch function to get tasks for specific date
-  getTasks: date => dispatch(getTasks(date))
+  getTasks: (date) => dispatch(getTasks(date)),
 });
 
 // used "withRouter" to access the url in the browser and "connect" for connecting to the redux state
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(App)
-);
+export default withRouter(connect(null, mapDispatchToProps)(App));
